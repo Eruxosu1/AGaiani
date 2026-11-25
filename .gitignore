@@ -1,0 +1,34 @@
+# game, mods and everything heavy: NEVER in git
+/MOHS2/
+*.zipmod
+*.unity3d
+*.cube
+*.resource
+# renders and media (made locally, big)
+/renders/
+/frames/
+/Output/
+*.mp4
+*.webm
+*.mov
+*.avi
+*.wav
+# models, secrets, caches
+*.safetensors
+*.gguf
+*.ckpt
+*.pt
+*.zip
+*.7z
+*.rar
+.env*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.pyc
+# C# build output
+bin/
+obj/
+.vs/
+# patches are applied by scripts/apply-patch.ps1 and deleted; never keep them in git
+*.patch

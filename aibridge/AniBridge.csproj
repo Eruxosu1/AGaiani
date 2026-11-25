@@ -1,0 +1,27 @@
+<!-- ЗАГОТОВКА (этап D). Не собиралась и не проверялась: нужен .NET SDK (не Runtime). -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>AniBridge</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <!-- корень MOHS2; можно переопределить: dotnet build -p:GamePath=E:\path\MOHS2 -->
+    <GamePath Condition="'$(GamePath)'==''">E:\uTorria\Downloads\MOHS2</GamePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BepInEx">
+      <HintPath>$(GamePath)\Mods\[plugs]BepInEx\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GamePath)\Data\StudioNEOV2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GamePath)\Data\StudioNEOV2_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
