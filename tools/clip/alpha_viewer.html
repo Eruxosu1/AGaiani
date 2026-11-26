@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Просмотр WebM с прозрачностью</title>
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; background: #7ec8ff; transition: background .2s; }
+  .bar { position: sticky; top: 0; padding: 8px 12px; background: rgba(255,255,255,.85); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .bar button { padding: 4px 10px; border: 1px solid #888; border-radius: 6px; cursor: pointer; }
+  video { display: block; margin: 12px auto; max-height: 85vh; max-width: 95vw; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span>Файл .webm:</span>
+  <input type="file" id="file" accept=".webm,video/webm">
+  <span>Фон:</span>
+  <button data-c="#7ec8ff">голубой</button>
+  <button data-c="#ff5fa2">розовый</button>
+  <button data-c="#ffd34d">жёлтый</button>
+  <button data-c="#222222">тёмный</button>
+  <button data-c="#ffffff">белый</button>
+</div>
+<video id="v" controls loop autoplay muted></video>
+<script>
+  // Открыть в Chrome/Edge: проводник Windows показывает прозрачный WebM с чёрным фоном, браузер показывает правильно.
+  const v = document.getElementById('v');
+  document.getElementById('file').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) { v.src = URL.createObjectURL(f); v.play(); }
+  });
+  document.querySelectorAll('button[data-c]').forEach(b =>
+    b.addEventListener('click', () => { document.body.style.background = b.dataset.c; }));
+</script>
+</body>
+</html>

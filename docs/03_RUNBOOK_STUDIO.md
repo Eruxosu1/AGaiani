@@ -43,6 +43,8 @@ python tools/clip/frames_to_alpha.py "E:\uTorria\Downloads\MOHS2\MO\overwrite\Us
 - `renders/clip1_preview.mp4`: персонаж на зелёном фоне, чтобы оценить края.
 - Звук: `--audio voice.wav`. ffmpeg должен быть в PATH или в переменной `FFMPEG`.
 
+Проверка прозрачности WebM: откройте `tools/clip/alpha_viewer.html` в Chrome/Edge (проводник Windows покажет чёрный фон, это нормально). Сборка клипа в библиотеку: `docs/07_CLIP_LIBRARY.md`.
+
 ## 7. Профиль AniSFW в Mod Organizer
 Для лёгкого и безопасного рендера сделайте отдельный профиль: Mod Organizer -> Profiles -> Create (скопировать из `Game`) -> отключить все моды, кроме нужных (Studio, Timeline, HS2PE, FKIK/AdvIK, Screenshot Manager, VideoExport, мокап-анимации, необходимые базовые). Это уменьшит нагрузку и исключит откровенный контент из сцены.
 

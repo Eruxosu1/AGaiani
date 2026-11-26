@@ -60,3 +60,28 @@ def test_list_frames_natural_order(tmp_path):
         _rgba_png(str(tmp_path / f"{n}.png"), 4, 4)
     got = [os.path.basename(p) for p in fa.list_frames(str(tmp_path))]
     assert got == ["0.png", "1.png", "2.png", "10.png", "11.png", "99.png", "100.png"]
+
+
+def test_seam_ratio_detects_loop_and_drift(tmp_path):
+    pytest.importorskip("numpy")
+    pytest.importorskip("PIL")
+    import build_clip as bc
+    from PIL import Image
+    loop = tmp_path / "loop"
+    drift = tmp_path / "drift"
+    loop.mkdir()
+    drift.mkdir()
+    n = 12
+    for i in range(n):
+        # цикл: сдвиг туда и обратно, последний кадр близок к первому, но не равен ему
+        shift = int(round(6 * abs(((i + 0.5) / n) * 2 - 1)))
+        img = Image.new("RGBA", (40, 40), (0, 0, 0, 0))
+        img.paste((255, 0, 0, 255), (shift, 10, shift + 10, 30))
+        img.save(loop / f"{i}.png")
+        img2 = Image.new("RGBA", (40, 40), (0, 0, 0, 0))
+        img2.paste((255, 0, 0, 255), (i * 2, 10, i * 2 + 10, 30))
+        img2.save(drift / f"{i}.png")
+    good = bc.seam_ratio(fa.list_frames(str(loop)))
+    bad = bc.seam_ratio(fa.list_frames(str(drift)))
+    assert good is not None and bad is not None
+    assert bad > good

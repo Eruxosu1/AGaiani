@@ -5,7 +5,7 @@
 ## Следующие 5 шагов (начните отсюда)
 1. Установить **.NET SDK** (нужен именно SDK, а не ASP.NET Core Runtime): https://dotnet.microsoft.com/download -> выбрать LTS-версию -> «SDK x64 Installer». Проверка: `dotnet --version` в PowerShell. Нужен только для этапа D.
 2. Собрать видео с прозрачностью из кадров теста (путь в `docs/03_RUNBOOK_STUDIO.md`, раздел 6; `--fps 60`, как при записи) и посмотреть `renders\test1_preview.mp4`. Нужен ffmpeg (`ffmpeg -version`).
-3. Записать новый тест на **30 к/с** с анимацией длиннее (Limit By = Animation, чтобы получился цикл) и сравнить скорость и размер.
+3. Снять первый клип `idle` по `docs/07_CLIP_LIBRARY.md` (30 к/с, Limit By = Animation) и собрать: `python tools/clip/build_clip.py "<папка_кадров>" --name idle --fps 30 --loop`.
 4. Освоить Studio: выбрать Main -> кнопка `anim` -> позы и анимации; сохранить сцену (кнопка `system`), чтобы не собирать заново.
 5. Решить образ финальной Ани (см. вопросы в `docs/02_STATE.md`) и сделать лист персонажа.
 
@@ -16,11 +16,11 @@
 - [x] VideoExport установлен вручную и записал 5 с (60 к/с, 300 кадров, около 2 мин)
 - [x] Аудит карточки Main: только ассеты игры
 - [x] Кадры с альфой из VideoExport: PNG RGBA лежат в `MO\overwrite\UserData\VideoExport\Frames\<дата>\`
-- [ ] Собрать WebM/MOV из реальных кадров и посмотреть в просмотрщике (`frames_to_alpha.py`)
+- [x] Собрать WebM из реальных кадров (`frames_to_alpha.py`): получилось, превью на зелёном чистое
 - [ ] Подобрать сглаживание краёв волос (upsampling, `--feather`, шейдер волос)
 - [ ] Отдельный профиль Mod Organizer `AniSFW` (только нужные плагины)
 - [ ] Финальный дизайн Ани: образ, цвета, фирменная деталь ANIMAGROSS; лист персонажа и эмоций
-- [ ] Библиотека клипов: покой (дыхание и моргание), говорит (петля), радуется, удивляется, думает, машет
+- [ ] Библиотека клипов по `docs/07_CLIP_LIBRARY.md`: idle, talk_a, talk_b, happy, surprised, think, wave, point (сборка: `tools/clip/build_clip.py`)
 - [ ] Проверка лицензий и условий (`docs/05_LICENSES_AND_SAFETY.md`)
 
 ## Этап B: первые шорты
