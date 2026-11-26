@@ -4,8 +4,8 @@
 
 ## Следующие 5 шагов (начните отсюда)
 1. Установить **.NET SDK** (нужен именно SDK, а не ASP.NET Core Runtime): https://dotnet.microsoft.com/download -> выбрать LTS-версию -> «SDK x64 Installer». Проверка: `dotnet --version` в PowerShell. Нужен только для этапа D.
-2. Повторить запись в VideoExport с **выключенной** галкой «Auto Delete Images», найти сохранённые кадры (см. `docs/03_RUNBOOK_STUDIO.md`, раздел 5).
-3. Собрать из кадров видео с прозрачностью: `python tools/clip/frames_to_alpha.py <папка_кадров> --fps 30 --out renders/test1 --feather 0.8 --preview` и посмотреть `renders/test1_preview.mp4`.
+2. Собрать видео с прозрачностью из кадров теста (путь в `docs/03_RUNBOOK_STUDIO.md`, раздел 6; `--fps 60`, как при записи) и посмотреть `renders\test1_preview.mp4`. Нужен ffmpeg (`ffmpeg -version`).
+3. Записать новый тест на **30 к/с** с анимацией длиннее (Limit By = Animation, чтобы получился цикл) и сравнить скорость и размер.
 4. Освоить Studio: выбрать Main -> кнопка `anim` -> позы и анимации; сохранить сцену (кнопка `system`), чтобы не собирать заново.
 5. Решить образ финальной Ани (см. вопросы в `docs/02_STATE.md`) и сделать лист персонажа.
 
@@ -15,7 +15,8 @@
 - [x] Прозрачный рендер через Screenshot Manager (Composite): работает
 - [x] VideoExport установлен вручную и записал 5 с (60 к/с, 300 кадров, около 2 мин)
 - [x] Аудит карточки Main: только ассеты игры
-- [ ] Кадры с альфой из VideoExport (выключить Auto Delete Images), сборка WebM/MOV
+- [x] Кадры с альфой из VideoExport: PNG RGBA лежат в `MO\overwrite\UserData\VideoExport\Frames\<дата>\`
+- [ ] Собрать WebM/MOV из реальных кадров и посмотреть в просмотрщике (`frames_to_alpha.py`)
 - [ ] Подобрать сглаживание краёв волос (upsampling, `--feather`, шейдер волос)
 - [ ] Отдельный профиль Mod Organizer `AniSFW` (только нужные плагины)
 - [ ] Финальный дизайн Ани: образ, цвета, фирменная деталь ANIMAGROSS; лист персонажа и эмоций

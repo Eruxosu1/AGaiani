@@ -29,13 +29,15 @@
 5. Limit By: Seconds (Limit Count = длина клипа) или Animation (длина анимации, получаются идеальные петли).
 6. Other Settings: **выключите «Auto Delete Images»**, иначе кадры удаляются после сборки видео.
 7. Start Recording (или Ctrl+Shift+E). Игра будет работать медленно: это нормально (около 0.4 с на кадр при 1080x1920).
-8. Результат: mp4 появляется в `MOHS2\Output\`; кадры (если галка выключена) ищите рядом с ним и в подпапках, а если не нашли, отсортируйте по дате изменения файлы `*.png` во всей папке MOHS2.
+8. Результат: mp4 появляется в `MOHS2\Output\`; **кадры лежат в** `MOHS2\MO\overwrite\UserData\VideoExport\Frames\<дата-время>\` как `0.png`, `1.png`, ... (PNG RGBA, ~1.8 МБ каждый). Если у вас по-другому, найдите их командой (запускайте во время записи):
+   `Get-ChildItem E:\uTorria\Downloads\MOHS2 -Recurse -File -Include *.png | Where-Object LastWriteTime -gt (Get-Date).AddMinutes(-15) | Sort-Object LastWriteTime -Descending | Select-Object -First 15 FullName`
 9. Режим «Screenshot tool» можно сменить на Built-in (пишет BMP без прозрачности) или Win32: для альфы они не подходят.
 
 ## 6. Видео с прозрачным фоном из кадров
 ```
-python tools/clip/frames_to_alpha.py <папка_с_кадрами> --fps 30 --out renders/clip1 --formats webm,mov --feather 0.8 --preview
+python tools/clip/frames_to_alpha.py "E:\uTorria\Downloads\MOHS2\MO\overwrite\UserData\VideoExport\Frames\2026-11-26T09-50-44" --fps 60 --out renders\clip1 --formats webm --feather 0.8 --preview
 ```
+`--fps` должен совпадать с Framerate записи в VideoExport (в тесте было 60; для шортов рекомендуем 30).
 - `renders/clip1.webm`: VP9 с прозрачностью (лёгкий, для сайта и браузера).
 - `renders/clip1.mov`: ProRes 4444 с прозрачностью (очень тяжёлый, для монтажа в видеоредакторе).
 - `renders/clip1_preview.mp4`: персонаж на зелёном фоне, чтобы оценить края.

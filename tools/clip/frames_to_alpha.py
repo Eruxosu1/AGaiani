@@ -17,6 +17,7 @@ frames_to_alpha.py: PNG-кадры с прозрачностью -> видео �
 """
 import argparse
 import os
+import re
 import shutil
 import struct
 import subprocess
@@ -32,8 +33,13 @@ def png_size(path):
     return struct.unpack(">II", head[16:24])
 
 
+def natural_key(name):
+    """0.png, 1.png, 2.png, 10.png, 100.png: числа сравниваются как числа (VideoExport не дописывает нули)."""
+    return [int(t) if t.isdigit() else t.lower() for t in re.split(r"(\d+)", name)]
+
+
 def list_frames(folder):
-    names = sorted(n for n in os.listdir(folder) if n.lower().endswith(".png"))
+    names = sorted((n for n in os.listdir(folder) if n.lower().endswith(".png")), key=natural_key)
     if not names:
         raise SystemExit(f"В папке нет PNG-кадров: {folder}")
     return [os.path.join(folder, n) for n in names]
@@ -92,7 +98,7 @@ def build_cmds(ffmpeg, pattern, fps, audio, feather, out, formats, preview, size
 
 def main():
     ap = argparse.ArgumentParser(description="PNG-кадры с альфой -> видео с прозрачным фоном")
-    ap.add_argument("frames", help="папка с PNG-кадрами (порядок по имени файла)")
+    ap.add_argument("frames", help="папка с PNG-кадрами (порядок по номеру в имени: 0.png, 1.png, 2.png, 10.png ...)")
     ap.add_argument("--fps", type=float, default=30)
     ap.add_argument("--out", required=True, help="базовое имя результата без расширения")
     ap.add_argument("--formats", default="webm", help="webm, mov или webm,mov")

@@ -53,3 +53,10 @@ def test_end_to_end_webm(tmp_path):
                        capture_output=True, text=True)
     assert r.returncode == 0, r.stderr
     assert os.path.getsize(str(out) + ".webm") > 0
+
+
+def test_list_frames_natural_order(tmp_path):
+    for n in ("0", "1", "2", "10", "11", "100", "99"):
+        _rgba_png(str(tmp_path / f"{n}.png"), 4, 4)
+    got = [os.path.basename(p) for p in fa.list_frames(str(tmp_path))]
+    assert got == ["0.png", "1.png", "2.png", "10.png", "11.png", "99.png", "100.png"]
